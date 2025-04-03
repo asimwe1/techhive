@@ -111,8 +111,7 @@ public class AuthController {
                 "lastName", user.getLastName(),
                 "email", user.getEmail(),
                 "username", user.getUsername(),
-                "role", user.getRole().toString(),
-                "skills", user.getSkills() != null ? user.getSkills() : new ArrayList<String>()
+                "role", user.getRole().toString()
         ));
     }
 }

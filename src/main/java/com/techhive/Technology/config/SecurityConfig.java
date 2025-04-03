@@ -4,6 +4,7 @@ package com.techhive.Technology.config;
 import com.techhive.Technology.Services.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -60,7 +61,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/login", "/api/auth/register", "/h2-console/**", "/", "/api/jobs", "/api/jobs/**", "/chat/**").permitAll()
                         .requestMatchers("/api/jobs/*/proposals").authenticated()
                         .requestMatchers("/api/auth/me", "/api/chat/**").authenticated()
-                        .requestMatchers("/api/jobs/**", "/api/recommendations/**").hasAuthority("ROLE_FREELANCER")
+                        .requestMatchers("/api/proposals/**", "/api/jobs/*/proposals", "/api/recommendations/**").hasAuthority("ROLE_FREELANCER")
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

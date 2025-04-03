@@ -47,8 +47,8 @@ public class ProfileService {
         profileDTO.setWebsite(userProfile.getWebsite());
         profileDTO.setAvatar(userProfile.getAvatar());
 
-        if (user.getRole().equals("ROLE_FREELANCER")) {
-            FreelancerProfile freelancerProfile = freelancerProfileRepository.findByUserProfile(userProfile)
+        if (user.getRole().toString().equals("FREELANCER")) {
+            FreelancerProfile freelancerProfile = freelancerProfileRepository.findByUserProfileWithSkills(userProfile)
                     .orElse(new FreelancerProfile());
             profileDTO.setSkills(freelancerProfile.getSkills() != null ? freelancerProfile.getSkills() : Collections.emptyList());
             profileDTO.setCompletedJobs(freelancerProfile.getCompletedJobs());
@@ -77,7 +77,7 @@ public class ProfileService {
         userProfile.setWebsite(profileDTO.getWebsite());
         userProfileRepository.save(userProfile);
 
-        if (user.getRole().equals("ROLE_FREELANCER")) {
+        if (user.getRole().toString().equals("FREELANCER")) {
             FreelancerProfile freelancerProfile = freelancerProfileRepository.findByUserProfile(userProfile)
                     .orElse(new FreelancerProfile());
             freelancerProfile.setUserProfile(userProfile);

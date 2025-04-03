@@ -6,7 +6,6 @@ import com.techhive.Technology.Models.User;
 import com.techhive.Technology.Repository.JobRepository;
 import com.techhive.Technology.Repository.ProposalRepository;
 import com.techhive.Technology.Repository.UserRepository;
-import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -66,10 +65,4 @@ public class ProposalController {
             return ResponseEntity.badRequest().body(Map.of("error", "Job not found"));
         });
     }
-}
-@Data
-class ProposalDTO {
-    private String coverLetter;
-    private Double proposedRate;
-    private Integer estimatedDays;
 }

@@ -152,7 +152,7 @@ public class DashboardController {
         int completion = 0;
         if (user.getUsername() != null) completion += 25;
         if (user.getEmail() != null) completion += 25;
-        if (user.getSkills() != null && !user.getSkills().isEmpty()) completion += 50;
+//        if (user.getSkills() != null && !user.getSkills().isEmpty()) completion += 50;
         return completion;
     }
 

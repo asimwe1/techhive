@@ -1,8 +1,9 @@
 package com.techhive.Technology.Models;
 
 import jakarta.persistence.*;
-import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Fetch;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +42,7 @@ public class Job {
     @Column(nullable = false)
     private String status;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "job_skills", joinColumns = @JoinColumn(name = "job_id"))
     @Column(name = "skill")
     private List<String> skills;
@@ -56,5 +57,6 @@ public class Job {
     protected void onCreate() {
         createdAt = LocalDateTime.now();
     }
+
 
 }

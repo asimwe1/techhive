@@ -4,7 +4,9 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.util.List;
+
+import java.time.LocalDateTime;
+
 import lombok.ToString;
 
 @Entity
@@ -36,16 +38,15 @@ public class User  {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @ElementCollection
-    private List<String> skills;
+    @Column(nullable = false)
+    private LocalDateTime created_at = LocalDateTime.now();
 
-    public User(String firstName, String lastName, String email, String username, Role role, List<String> skills) {
+    public User(String firstName, String lastName, String email, String username, Role role) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.username = username;
         this.role = role;
-        this.skills = skills;
     }
 
 }
