@@ -23,15 +23,15 @@ public class TechnologyApplication {
 		return args -> {
 			// List of users to insert
 			User[] users = new User[] {
-					new User("Dawidi", "Polo", "dawidi2@gmail.com", "david", UserType.CLIENT),  // Changed email since dawidi@gmail.com exists
-					new User("Alice", "Smith", "alice.smith@gmail.com", "smith", UserType.CLIENT),
-					new User("Bob", "Johnson", "bob.johnson@gmail.com", "bob", UserType.DEVELOPER),
-					new User("Clara", "Lee", "clara.lee@gmail.com", "clara", UserType.DEVELOPER),
-					new User("David", "Brown", "david.brown@gmail.com", "david", UserType.DEVELOPER),
+					new User("Dawidi", "Polo", "dawidi2@gmail.com", "david", Role.CLIENT),  // Changed email since dawidi@gmail.com exists
+					new User("Alice", "Smith", "alice.smith@gmail.com", "smith", Role.CLIENT),
+					new User("Bob", "Johnson", "bob.johnson@gmail.com", "bob", Role.FREELANCER),
+					new User("Clara", "Lee", "clara.lee@gmail.com", "clara", Role.FREELANCER),
+					new User("David", "Brown", "david.brown@gmail.com", "david", Role.FREELANCER),
 			};
 
 			Job[] jobs = new Job[] {
-					new Job("Website Development", 1, new Range<Double>(6000.00, 8000.00),1 ),
+					new Job("Website Development", 1,1, 6000.00, 8000.00 ),
 			};
 
 			JobCategory[] categories = new JobCategory[]{
@@ -63,7 +63,7 @@ public class TechnologyApplication {
 
 			for (Job job : jobs) {
 				Optional<User> client = userRepository.findById(job.getClientId());
-				if (client.isPresent() && client.get().getUserType() == UserType.CLIENT) {
+				if (client.isPresent() && client.get().getRole() == Role.CLIENT) {
 					jobRepository.save(job);
 					System.out.println("Job saved: " + job + ";");
 				} else {

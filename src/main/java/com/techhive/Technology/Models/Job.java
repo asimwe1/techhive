@@ -11,33 +11,36 @@ public class Job {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String name;
 
+    private String name;
 
     @Column(name = "category_id")
     private Integer categoryId;
 
-    @Type(RangeUserType.class)
-    @Column(name = "salary_range", columnDefinition = "numrange")
-    private Range<Double> salaryRange;
-
-
     @Column(name = "client_id")
     private Integer clientId;
 
-    public Job(Integer id, String name, Integer categoryId, Range<Double> salaryRange, Integer clientId) {
+    @Column(name = "salary_range_lower")
+    private Double salaryRangeLower;
+
+    @Column(name = "salary_range_upper")
+    private Double salaryRangeUpper;
+
+    public Job(Integer id, String name, Integer categoryId, Integer clientId, Double salaryRangeLower, Double salaryRangeUpper) {
         this.id = id;
         this.name = name;
         this.categoryId = categoryId;
-        this.salaryRange = salaryRange;
         this.clientId = clientId;
+        this.salaryRangeLower = salaryRangeLower;
+        this.salaryRangeUpper = salaryRangeUpper;
     }
 
-    public Job(String name, Integer categoryId, Range<Double> salaryRange, Integer clientId) {
+    public Job(String name, Integer categoryId, Integer clientId, Double salaryRangeLower, Double salaryRangeUpper) {
         this.name = name;
         this.categoryId = categoryId;
-        this.salaryRange = salaryRange;
         this.clientId = clientId;
+        this.salaryRangeLower = salaryRangeLower;
+        this.salaryRangeUpper = salaryRangeUpper;
     }
 
     public Job() {
@@ -67,18 +70,28 @@ public class Job {
         this.categoryId = categoryId;
     }
 
-    public Range getSalaryRange() {
-        return salaryRange;
-    }
-
-    public void setSalaryRange(Range salaryRange) {
-        this.salaryRange = salaryRange;
-    }
-
     public Integer getClientId() {
         return clientId;
     }
+
     public void setClientId(Integer Client) {
         this.clientId = Client;
     }
+
+    public Double getSalaryRangeLower() {
+        return salaryRangeLower;
+    }
+
+    public void setSalaryRangeLower(Double salaryRangeLower) {
+        this.salaryRangeLower = salaryRangeLower;
+    }
+
+    public Double getSalaryRangeUpper() {
+        return salaryRangeUpper;
+    }
+
+    public void setSalaryRangeUpper(Double salaryRangeUpper) {
+        this.salaryRangeUpper = salaryRangeUpper;
+    }
+
 }
