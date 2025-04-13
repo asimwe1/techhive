@@ -1,4 +1,4 @@
-package com.techhive.Technology.Models;
+package com.techhive.tech.Models;
 
 public class Range<T extends Comparable<T>> {
     private T min;

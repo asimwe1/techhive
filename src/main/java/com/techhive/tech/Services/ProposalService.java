@@ -1,10 +1,10 @@
-package com.techhive.Technology.Services;
+package com.techhive.tech.Services;
 
-import com.techhive.Technology.Models.Proposal;
-import com.techhive.Technology.Models.User;
-import com.techhive.Technology.Repository.JobRepository;
-import com.techhive.Technology.Repository.ProposalRepository;
-import com.techhive.Technology.Repository.UserRepository;
+import com.techhive.tech.Models.Proposal;
+import com.techhive.tech.Models.User;
+import com.techhive.tech.Repository.JobRepository;
+import com.techhive.tech.Repository.ProposalRepository;
+import com.techhive.tech.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;

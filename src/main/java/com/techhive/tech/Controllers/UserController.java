@@ -1,7 +1,7 @@
-package com.techhive.Technology.Controllers;
+package com.techhive.tech.Controllers;
 
-import com.techhive.Technology.Models.User;
-import com.techhive.Technology.Repository.UserRepository;
+import com.techhive.tech.Models.User;
+import com.techhive.tech.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

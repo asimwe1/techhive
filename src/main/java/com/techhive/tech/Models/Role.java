@@ -1,4 +1,4 @@
-package com.techhive.Technology.Models;
+package com.techhive.tech.Models;
 
 public enum Role {
     FREELANCER, CLIENT, MENTOR,LEARNER

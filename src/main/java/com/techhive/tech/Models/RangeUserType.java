@@ -1,4 +1,4 @@
-package com.techhive.Technology.Models;
+package com.techhive.tech.Models;
 
 import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.usertype.UserType;

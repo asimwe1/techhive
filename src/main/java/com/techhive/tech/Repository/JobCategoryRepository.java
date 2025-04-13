@@ -1,6 +1,6 @@
-package com.techhive.Technology.Repository;
+package com.techhive.tech.Repository;
 
-import com.techhive.Technology.Models.JobCategory;
+import com.techhive.tech.Models.JobCategory;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

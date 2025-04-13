@@ -1,4 +1,4 @@
-package com.techhive.Technology.Models;
+package com.techhive.tech.Models;
 
 
 import jakarta.persistence.*;

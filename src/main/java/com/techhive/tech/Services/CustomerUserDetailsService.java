@@ -1,4 +1,4 @@
-package com.techhive.Technology.Services;
+package com.techhive.tech.Services;
 
 public class CustomerUserDetailsService {
 }

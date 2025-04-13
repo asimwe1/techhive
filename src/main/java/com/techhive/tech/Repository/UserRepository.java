@@ -1,10 +1,8 @@
-package com.techhive.Technology.Repository;
+package com.techhive.tech.Repository;
 
-import com.techhive.Technology.Models.User;
-import org.springframework.data.jpa.domain.Specification;
+import com.techhive.tech.Models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
 import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Integer> {

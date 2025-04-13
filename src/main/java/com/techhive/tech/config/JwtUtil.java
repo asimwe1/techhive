@@ -1,4 +1,4 @@
-package com.techhive.Technology.config;
+package com.techhive.tech.config;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

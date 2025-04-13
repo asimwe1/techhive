@@ -1,9 +1,9 @@
-package com.techhive.Technology;
+package com.techhive.tech;
 
-import com.techhive.Technology.Models.*;
-import com.techhive.Technology.Repository.JobCategoryRepository;
-import com.techhive.Technology.Repository.JobRepository;
-import com.techhive.Technology.Repository.UserRepository;
+import com.techhive.tech.Models.*;
+import com.techhive.tech.Repository.JobCategoryRepository;
+import com.techhive.tech.Repository.JobRepository;
+import com.techhive.tech.Repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

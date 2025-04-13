@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.techhive</groupId>
-	<artifactId>Technology</artifactId>
+	<artifactId>tech</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Technology</name>
+	<name>tech</name>
 	<description>Job Listing Platform for African Tech Startups</description>
 	<url/>
 	<licenses>

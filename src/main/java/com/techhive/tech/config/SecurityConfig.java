@@ -1,4 +1,4 @@
-package com.techhive.Technology.config;
+package com.techhive.tech.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
