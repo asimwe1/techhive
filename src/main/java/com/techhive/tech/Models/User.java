@@ -4,10 +4,12 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Table(name = "Users")
 @Data
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor(staticName = "of")
 public class User  {
@@ -30,5 +32,6 @@ public class User  {
         this.username = username;
         this.role = role;
     }
+
 
 }
