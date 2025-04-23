@@ -9,10 +9,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @SpringBootApplication
 public class TechnologyApplication {
+
 
 	public static void main(String[] args) {
 		SpringApplication.run(TechnologyApplication.class, args);
@@ -20,14 +23,22 @@ public class TechnologyApplication {
 
 	@Bean
 	CommandLineRunner commandLineRunner(UserRepository userRepository, JobRepository jobRepository, JobCategoryRepository jobCategoryRepository) {
+		List<String> clientSkills = new ArrayList<>();
+		List<String> freelancerSkills = new ArrayList<>();
+		clientSkills.add("Investment");
+		clientSkills.add("Development");
+		clientSkills.add("Production");
+		freelancerSkills.add("Java");
+		freelancerSkills.add("NextJS");
+
 		return args -> {
 			// List of users to insert
 			User[] users = new User[] {
-					new User("Dawidi", "Polo", "dawidi2@gmail.com", "david", Role.CLIENT),  // Changed email since dawidi@gmail.com exists
-					new User("Alice", "Smith", "alice.smith@gmail.com", "smith", Role.CLIENT),
-					new User("Bob", "Johnson", "bob.johnson@gmail.com", "bob", Role.FREELANCER),
-					new User("Clara", "Lee", "clara.lee@gmail.com", "clara", Role.FREELANCER),
-					new User("David", "Brown", "david.brown@gmail.com", "david", Role.FREELANCER),
+					new User("Dawidi", "Polo", "dawidi2@gmail.com", "david", Role.CLIENT, clientSkills ),  // Changed email since dawidi@gmail.com exists
+					new User("Alice", "Smith", "alice.smith@gmail.com", "smith", Role.CLIENT, clientSkills),
+					new User("Bob", "Johnson", "bob.johnson@gmail.com", "bob", Role.FREELANCER, freelancerSkills),
+					new User("Clara", "Lee", "clara.lee@gmail.com", "clara", Role.FREELANCER, freelancerSkills),
+					new User("David", "Brown", "david.brown@gmail.com", "david", Role.FREELANCER, freelancerSkills),
 			};
 
 			Job[] jobs = new Job[] {
