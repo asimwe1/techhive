@@ -1,9 +1,6 @@
 package com.techhive.Technology.Models;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.annotations.Type;
-import org.hibernate.type.SqlTypes;
 
 @Entity
 @Table(name = "jobs")

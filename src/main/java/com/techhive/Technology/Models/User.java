@@ -5,10 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.util.List;
+import lombok.ToString;
 
 @Entity
 @Table(name = "Users")
 @Data
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor(staticName = "of")
 public class User  {

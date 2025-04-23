@@ -1,7 +1,6 @@
 package com.techhive.Technology.Controllers;
 
 import com.techhive.Technology.Models.Proposal;
-import com.techhive.Technology.Repository.ProposalRepository;
 import com.techhive.Technology.Services.ProposalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
