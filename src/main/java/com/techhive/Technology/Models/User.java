@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import java.util.List;
 
 @Entity
 @Table(name = "Users")
@@ -16,19 +17,27 @@ public class User  {
     private Integer id;
     private String firstName;
     private String lastName;
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String username;
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String email;
+
+    @Column(nullable = false)
     private String password;
+
+    @Column(nullable = false)
     private Role role;
 
-    public User(String firstName, String lastName, String email, String username, Role role) {
+    @ElementCollection
+    private List<String> skills;
+
+    public User(String firstName, String lastName, String email, String username, Role role, List<String> skills) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.username = username;
         this.role = role;
+        this.skills = skills;
     }
 
 }
