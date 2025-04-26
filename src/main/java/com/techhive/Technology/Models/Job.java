@@ -1,94 +1,57 @@
 package com.techhive.Technology.Models;
 
 import jakarta.persistence.*;
+import jakarta.persistence.*;
+import lombok.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "jobs")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Job {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(nullable = false)
     private String name;
 
-    @Column(name = "category_id")
-    private Integer categoryId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "client_id", nullable = false)
+    private User client;
 
-    @Column(name = "client_id")
-    private Integer clientId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id", nullable = false)
+    private JobCategory category;
 
-    @Column(name = "salary_range_lower")
+    @Column(name = "salary_range_lower", nullable = false)
     private Double salaryRangeLower;
 
-    @Column(name = "salary_range_upper")
+    @Column(name = "salary_range_upper", nullable = false)
     private Double salaryRangeUpper;
 
-    public Job(Integer id, String name, Integer categoryId, Integer clientId, Double salaryRangeLower, Double salaryRangeUpper) {
-        this.id = id;
-        this.name = name;
-        this.categoryId = categoryId;
-        this.clientId = clientId;
-        this.salaryRangeLower = salaryRangeLower;
-        this.salaryRangeUpper = salaryRangeUpper;
-    }
+    @Column(nullable = false)
+    private String status;
 
-    public Job(String name, Integer categoryId, Integer clientId, Double salaryRangeLower, Double salaryRangeUpper) {
-        this.name = name;
-        this.categoryId = categoryId;
-        this.clientId = clientId;
-        this.salaryRangeLower = salaryRangeLower;
-        this.salaryRangeUpper = salaryRangeUpper;
-    }
+    @ElementCollection
+    @CollectionTable(name = "job_skills", joinColumns = @JoinColumn(name = "job_id"))
+    @Column(name = "skill")
+    private List<String> skills;
 
-    public Job() {
-    }
+    @OneToMany(mappedBy = "job", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Proposal> proposals = new ArrayList<>();
 
-    public Integer getId() {
-        return id;
-    }
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(Integer categoryId) {
-        this.categoryId = categoryId;
-    }
-
-    public Integer getClientId() {
-        return clientId;
-    }
-
-    public void setClientId(Integer Client) {
-        this.clientId = Client;
-    }
-
-    public Double getSalaryRangeLower() {
-        return salaryRangeLower;
-    }
-
-    public void setSalaryRangeLower(Double salaryRangeLower) {
-        this.salaryRangeLower = salaryRangeLower;
-    }
-
-    public Double getSalaryRangeUpper() {
-        return salaryRangeUpper;
-    }
-
-    public void setSalaryRangeUpper(Double salaryRangeUpper) {
-        this.salaryRangeUpper = salaryRangeUpper;
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
     }
 
 }

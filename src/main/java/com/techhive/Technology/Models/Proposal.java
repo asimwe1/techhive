@@ -22,21 +22,21 @@ public class Proposal {
     @JoinColumn(name = "freelancer_id", nullable = false)
     private User freelancer;
 
-    @Column(nullable = false)
+    @Column(name = "cover_letter", nullable = false)
     private String coverLetter;
 
-    @Column(nullable = false)
+    @Column(name = "proposed_rate", nullable = false)
     private Double proposalRate;
 
-    @Column(nullable = false)
-    private  Integer estimateDays;
+    @Column(name = "estimated_days")
+    private  Integer estimatedDays;
 
-    public Proposal(Job job, User freelancer, String coverLetter, Double proposalRate, Integer estimateDays) {
+    public Proposal(Job job, User freelancer, String coverLetter, Double proposalRate, Integer estimatedDays) {
         this.job = job;
         this.freelancer = freelancer;
         this.coverLetter = coverLetter;
         this.proposalRate = proposalRate;
-        this.estimateDays = estimateDays;
+        this.estimatedDays = estimatedDays;
     }
 
 }

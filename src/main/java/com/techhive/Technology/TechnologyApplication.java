@@ -8,79 +8,78 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 @SpringBootApplication
 public class TechnologyApplication {
 
-
 	public static void main(String[] args) {
 		SpringApplication.run(TechnologyApplication.class, args);
 	}
 
 	@Bean
-	CommandLineRunner commandLineRunner(UserRepository userRepository, JobRepository jobRepository, JobCategoryRepository jobCategoryRepository) {
-		List<String> clientSkills = new ArrayList<>();
-		List<String> freelancerSkills = new ArrayList<>();
-		clientSkills.add("Investment");
-		clientSkills.add("Development");
-		clientSkills.add("Production");
-		freelancerSkills.add("Java");
-		freelancerSkills.add("NextJS");
-
+	CommandLineRunner commandLineRunner(UserRepository userRepository, JobRepository jobRepository,
+										JobCategoryRepository jobCategoryRepository, PasswordEncoder passwordEncoder) {
 		return args -> {
-			// List of users to insert
-			User[] users = new User[] {
-					new User("Dawidi", "Polo", "dawidi2@gmail.com", "david", Role.CLIENT, clientSkills ),  // Changed email since dawidi@gmail.com exists
-					new User("Alice", "Smith", "alice.smith@gmail.com", "smith", Role.CLIENT, clientSkills),
-					new User("Bob", "Johnson", "bob.johnson@gmail.com", "bob", Role.FREELANCER, freelancerSkills),
-					new User("Clara", "Lee", "clara.lee@gmail.com", "clara", Role.FREELANCER, freelancerSkills),
-					new User("David", "Brown", "david.brown@gmail.com", "david", Role.FREELANCER, freelancerSkills),
-			};
-
-			Job[] jobs = new Job[] {
-					new Job("Website Development", 1,1, 6000.00, 8000.00 ),
-			};
-
+			// Job categories
 			JobCategory[] categories = new JobCategory[]{
 					new JobCategory("Web Development"),
 					new JobCategory("Mobile Development"),
 					new JobCategory("Blockchain"),
 			};
-
 			for (JobCategory category : categories) {
 				String name = category.getCategory();
-				if (category != null && jobCategoryRepository.findByCategory(name).isEmpty() ) {
+				if (jobCategoryRepository.findByCategory(name).isEmpty()) {
 					jobCategoryRepository.saveAndFlush(category);
-					System.out.println("Saved: " + category.getCategory() + "As category");
+					System.out.println("Saved category: " + name);
 				}
 			}
 
-			// Insert each user, checking for duplicates
+			// Users
+			List<String> clientSkills = Arrays.asList("Investment", "Development", "Production");
+			List<String> freelancerSkills = Arrays.asList("Java", "NextJS");
+			User[] users = new User[]{
+					new User("Dawidi", "Polo", "dawidi2@gmail.com", "david2", Role.CLIENT, clientSkills),
+					new User("Alice", "Smith", "alice.smith@gmail.com", "alice", Role.CLIENT, clientSkills),
+					new User("Bob", "Johnson", "bob.johnson@gmail.com", "bob", Role.FREELANCER, freelancerSkills),
+					new User("Clara", "Lee", "clara.lee@gmail.com", "clara", Role.FREELANCER, freelancerSkills),
+					new User("David", "Brown", "david.brown@gmail.com", "david", Role.FREELANCER, freelancerSkills),
+			};
 			for (User user : users) {
 				String email = user.getEmail();
 				String username = user.getUsername();
-				if (userRepository.findByEmail(email).isEmpty() && userRepository.findByUsername(username).isEmpty() ) { // Requires findByEmail in UserRepository
+				if (userRepository.findByEmail(email).isEmpty() && userRepository.findByUsername(username).isEmpty()) {
+					user.setPassword(passwordEncoder.encode("password123")); // Encode default password
 					userRepository.save(user);
-					System.out.println("User saved with email: " + email);
-					System.out.println(user + "\n" + "\n");
+					System.out.println("User saved: " + email);
 				} else {
-					System.out.println("User with email " + email + " already exists, skipping save.");
+					System.out.println("User with email " + email + " or username " + username + " already exists");
 				}
 			}
 
-			for (Job job : jobs) {
-				Optional<User> client = userRepository.findById(job.getClientId());
-				if (client.isPresent() && client.get().getRole() == Role.CLIENT) {
-					jobRepository.save(job);
-					System.out.println("Job saved: " + job + ";");
-				} else {
-					System.out.println("The job client with id " + job.getClientId() + " does not exist or is a developer, skipping save;");
-				}
+			// Jobs
+			Job job = new Job();
+			job.setName("Website Development");
+			Optional<JobCategory> category = jobCategoryRepository.findById(1);
+			if (category.isEmpty()) {
+				throw new RuntimeException("Category with ID 1 not found");
 			}
+			job.setCategory(category.get());
+			Optional<User> client = userRepository.findById(1);
+			if (client.isEmpty() || client.get().getRole() != Role.CLIENT) {
+				throw new RuntimeException("Client with ID 1 not found or is not a client");
+			}
+			job.setClient(client.get());
+			job.setSalaryRangeLower(6000.0);
+			job.setSalaryRangeUpper(8000.0);
+			job.setStatus("OPEN");
+			job.setSkills(Arrays.asList("Java", "Spring Boot"));
+			jobRepository.save(job);
+			System.out.println("Job saved: " + job.getName());
 		};
 	}
 }
