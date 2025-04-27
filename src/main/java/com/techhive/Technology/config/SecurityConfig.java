@@ -1,3 +1,4 @@
+// config/SecurityConfig.java
 package com.techhive.Technology.config;
 
 import com.techhive.Technology.Services.CustomUserDetailsService;
@@ -31,19 +32,35 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(request -> {
                     var corsConfiguration = new org.springframework.web.cors.CorsConfiguration();
-                    corsConfiguration.setAllowedOrigins(java.util.List.of("http://localhost:3000"));
-                    corsConfiguration.setAllowedMethods(java.util.List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-                    corsConfiguration.setAllowedHeaders(java.util.List.of("Authorization", "Content-Type", "Accept"));
-                    corsConfiguration.setExposedHeaders(java.util.List.of("Access-Control-Allow-Origin", "Access-Control-Allow-Methods"));
+                    corsConfiguration.setAllowedOrigins(java.util.List.of(
+                        "http://localhost:3000",
+                        "http://127.0.0.1:3000"
+                    ));
+                    corsConfiguration.setAllowedMethods(java.util.List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
+                    corsConfiguration.setAllowedHeaders(java.util.List.of(
+                        "Authorization",
+                        "Content-Type",
+                        "Accept",
+                        "Origin",
+                        "X-Requested-With",
+                        "Access-Control-Request-Method",
+                        "Access-Control-Request-Headers"
+                    ));
+                    corsConfiguration.setExposedHeaders(java.util.List.of(
+                        "Authorization",
+                        "Access-Control-Allow-Origin",
+                        "Access-Control-Allow-Methods",
+                        "Access-Control-Allow-Headers"
+                    ));
                     corsConfiguration.setAllowCredentials(true);
                     corsConfiguration.setMaxAge(3600L);
                     return corsConfiguration;
                 }))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/api/auth/**", "/h2-console/**").permitAll()
-                        .requestMatchers("/api/jobs/**").hasAuthority("ROLE_FREELANCER")
-                        .requestMatchers("/api/recommendations/**").hasAuthority("ROLE_FREELANCER")
-                        .requestMatchers("/api/users/me").authenticated()
+                        .requestMatchers("/api/auth/login", "/api/auth/register", "/h2-console/**", "/", "/api/jobs", "/api/jobs/**", "/chat/**").permitAll()
+                        .requestMatchers("/api/jobs/*/proposals").authenticated()
+                        .requestMatchers("/api/auth/me", "/api/chat/**").authenticated()
+                        .requestMatchers("/api/jobs/**", "/api/recommendations/**").hasAuthority("ROLE_FREELANCER")
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

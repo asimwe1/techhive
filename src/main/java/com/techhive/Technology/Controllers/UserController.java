@@ -2,8 +2,10 @@ package com.techhive.Technology.Controllers;
 
 import com.techhive.Technology.Models.User;
 import com.techhive.Technology.Repository.UserRepository;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,16 +47,26 @@ public class UserController {
     }
 
     @GetMapping("/me")
-    public ResponseEntity<User> getCurrentUser() {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        return userRepository.findByUsername(username)
-                .map(user -> {
-                    System.out.println("Found User: " + username + ", Role: " + user.getRole());
-                    return ResponseEntity.ok(user);
-                })
-                .orElseGet(() -> {
-                    System.out.println("User not found: " + username);
-                    return ResponseEntity.status(404).body(null);
-                });
+    public ResponseEntity<UserDTO> getCurrentUser(Authentication authentication) {
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return ResponseEntity.status(401).body(null);
+        }
+        String username = authentication.getName();
+        Optional<User> user = userRepository.findByUsername(username);
+        if (user.isEmpty()) {
+            return ResponseEntity.status(404).body(null);
+        }
+        UserDTO dto = new UserDTO();
+        dto.setId(user.get().getId());
+        dto.setUsername(user.get().getUsername());
+        dto.setRole(user.get().getRole().name()); // Ensure role is ROLE_FREELANCER
+        return ResponseEntity.ok(dto);
     }
+}
+
+@Data
+class UserDTO {
+    private Integer id;
+    private String username;
+    private String role;
 }
